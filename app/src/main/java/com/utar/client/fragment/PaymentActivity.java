@@ -39,6 +39,7 @@ public class PaymentActivity extends AppCompatActivity implements AccountAssista
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //startActivity(new Intent(PaymentActivity.this, MainActivity.class));
                 finish();
             }
         });
@@ -47,7 +48,7 @@ public class PaymentActivity extends AppCompatActivity implements AccountAssista
     @Override
     public void onResume() {
         super.onResume();
-        Log.i(TAG, "HceService is started");
+        Log.i(TAG, "Hce Service is started and ready for payment");
         PackageManager pm = getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName(this,
                         "com.utar.client.cardemulation.HCEService"),
@@ -58,12 +59,12 @@ public class PaymentActivity extends AppCompatActivity implements AccountAssista
     @Override
     public void onStop() {
         super.onStop();
-        /*Log.i(TAG, "HceService is stopped");
+        Log.i(TAG, "Payment success and the Hce Service is stopped");
         PackageManager pm = getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName(this,
                         "com.utar.client.cardemulation.HCEService"),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP);*/
+                PackageManager.DONT_KILL_APP);
     }
 
     private void toast(String msg){
@@ -104,7 +105,7 @@ public class PaymentActivity extends AppCompatActivity implements AccountAssista
 
             @Override
             public void onFinish() {
-                startActivity(new Intent(PaymentActivity.this, MainActivity.class));
+                //startActivity(new Intent(PaymentActivity.this, MainActivity.class));
                 finish();
             }
         };

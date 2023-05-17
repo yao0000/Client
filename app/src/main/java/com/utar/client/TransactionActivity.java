@@ -160,7 +160,7 @@ public class TransactionActivity extends AppCompatActivity {
             tv_amount.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
             tv_amount.setLayoutParams(new ViewGroup.LayoutParams((int) (displayWidth * 0.35), ViewGroup.LayoutParams.MATCH_PARENT));
             tv_amount.setGravity(Gravity.RIGHT);
-            if(transaction.getType().equals(Transaction.PAYMENT) || transaction.getType().equals(Transaction.TRANSFER_OUT)){
+            if(transaction.getType().equals(Transaction.PAYMENT) || transaction.getType().equals(Transaction.TRANSFER_OUT) || transaction.getType().equals(Transaction.WITHDRAW)){
                 tv_amount.setText(String.format("- RM%.2f", transaction.getAmount()));
                 tv_amount.setTextColor(getResources().getColor(R.color.dark_red));
             }

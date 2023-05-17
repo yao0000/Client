@@ -1,12 +1,17 @@
 package com.utar.client;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
@@ -74,8 +79,22 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
                 case R.id.payment:
-                    startActivity(new Intent(MainActivity.this, PaymentActivity.class));
-                    finish();
+                    NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(MainActivity.this);
+                    if(nfcAdapter.isEnabled()) {
+                        startActivity(new Intent(MainActivity.this, PaymentActivity.class));
+                    }
+                    else{
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("NFC is disabled")
+                                .setMessage("Please enable NFC module")
+                                .setPositiveButton("Proceed to enable", (dialog, which) -> {
+                                    startActivity(new Intent("android.settings.NFC_SETTINGS"));
+                                })
+                                .setNegativeButton("Cancel", null)
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                        ((BottomNavigationView) findViewById(R.id.bottomNavigationView)).getMenu().findItem(R.id.home).setChecked(true);
+                    }
                     break;
 
                 case R.id.settings:

@@ -33,7 +33,13 @@ public class Login extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        Log.i(TAG, "HceService is disabled in the entry point of application");
+        PackageManager pm = getPackageManager();
+        pm.setComponentEnabledSetting(new ComponentName(this,
+                        "com.utar.client.cardemulation.HCEService"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));

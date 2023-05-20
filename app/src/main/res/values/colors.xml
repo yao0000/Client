@@ -19,6 +19,7 @@
     <color name="soft_blue">#1277BD</color>
     <color name="white_grey">#EDEDED</color>
     <color name="blue">#FF0000FF</color>
+    <color name="gray">#CCCCCC</color>
 
     <color name="colorPrimary">#6200EE</color>
 </resources>

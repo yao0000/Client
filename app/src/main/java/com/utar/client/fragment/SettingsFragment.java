@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +17,6 @@ import com.utar.client.Login;
 import com.utar.client.R;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.utar.client.TransactionActivity;
-import com.utar.client.data.Transaction;
 
 public class SettingsFragment extends Fragment {
     TextView tv_logout;

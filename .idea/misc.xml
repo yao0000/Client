@@ -15,13 +15,14 @@
         <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/activity_payment.xml" value="0.1" />
         <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/activity_receive.xml" value="0.17119565217391305" />
         <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/activity_register.xml" value="0.19429347826086957" />
-        <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/activity_transaction.xml" value="0.22780797101449277" />
+        <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/activity_transaction.xml" value="0.152" />
         <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/buttons_layout.xml" value="0.22780797101449277" />
         <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/fragment_home.xml" value="0.1408514492753623" />
         <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/fragment_payment.xml" value="0.17119565217391305" />
         <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/fragment_receive.xml" value="0.12708333333333333" />
         <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/fragment_settings.xml" value="0.12708333333333333" />
         <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/inputs_layout.xml" value="0.22780797101449277" />
+        <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/item_transaction.xml" value="0.1" />
         <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/layout_date_picker.xml" value="0.22780797101449277" />
         <entry key="..\:/FYP_Development/client2/app/src/main/res/layout/layout_reload_withdraw.xml" value="0.22780797101449277" />
         <entry key="..\:/FYP_Development/client2/app/src/main/res/menu/bottom_nav_menu.xml" value="0.12708333333333333" />

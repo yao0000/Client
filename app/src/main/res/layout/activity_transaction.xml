@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".TransactionActivity">
+    tools:context=".ui.TransactionActivity">
 
 
     <LinearLayout
@@ -23,24 +23,13 @@
             android:layout_weight="1"
             android:textSize="25dp"
             android:textStyle="bold"
-            android:text="History" />
+            android:text="Transaction History" />
 
-        <Button
-            android:id="@+id/transaction_btn_search"
+        <ImageView
+            android:id="@+id/iv_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:backgroundTint="@color/soft_blue"
-            android:text="Search" />
-
-        <Button
-            android:id="@+id/transaction_btn_reset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/soft_blue"
-            android:layout_weight="1"
-            android:text="Reset" />
+            android:background="@drawable/ic_baseline_filter_alt_24"/>
 
     </LinearLayout>
 
@@ -51,13 +40,16 @@
         android:background="@color/black"/>
 
     <ScrollView
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
         android:id="@+id/wholeTransaction"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/transaction_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </ScrollView>
 
 

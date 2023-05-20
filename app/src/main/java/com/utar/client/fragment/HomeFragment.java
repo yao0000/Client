@@ -28,8 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.utar.client.R;
-import com.utar.client.TransactionActivity;
-import com.utar.client.cardemulation.HCEService;
+import com.utar.client.ui.TransactionActivity;
 import com.utar.client.data.*;
 
 

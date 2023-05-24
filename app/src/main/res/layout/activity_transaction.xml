@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.TransactionActivity">
+    tools:context=".ui.home.TransactionActivity">
 
 
     <LinearLayout
@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:textSize="25dp"
             android:textStyle="bold"
-            android:text="Transaction History" />
+            android:text="@string/transaction_activity_title" />
 
         <ImageView
             android:id="@+id/iv_filter"

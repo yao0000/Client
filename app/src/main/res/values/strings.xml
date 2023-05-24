@@ -1,36 +1,103 @@
 <resources>
     <string name="app_name">Quick eWallet</string>
+    <string name="service_name" translatable="false">Card Emulation Service</string>
+    <string name="card_title" translatable="false">DTU</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!-- General -->
+    <string name="err">Error Occur</string>
+    <string name="alert">Alert</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Model -->
+    <!-- Transaction Class -->
+    <string name="reload">Reload</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="payment">Payment</string>
+    <string name="transfer_in">Receive Transfer</string>
+    <string name="transfer_out">Transfer Out</string>
+    <string name="payment_receive">Payment Receive</string>
+
+
+    <!-- Login / Registration / Forgot Password -->
+    <!-- Share -->
+    <string name="email">Email</string>
+    <string name="email_hint">Enter Email</string>
+    <string name="password">Password</string>
+    <string name="password_hint">Enter Password</string>
+
+    <!-- Login -->
+    <string name="login">LOG IN</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="to_register">Click to Register</string>
+    <string name="login_success">Login Successfully</string>
+    <string name="login_fail">Login Failure</string>
+
+    <!-- Registration -->
+    <string name="registration">Registration</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="confirm_password_hint">Enter Confirm Password</string>
+    <string name="name">Name</string>
+    <string name="name_hint">Enter Name</string>
+    <string name="register">REGISTER</string>
+    <string name="to_login">Click to Login</string>
+    <string name="mismatch_password">Password and Confirm Password not match</string>
+    <string name="register_successfully">Register Successfully</string>
+    <string name="fail_register">Fail to register</string>
+
+    <!-- Forgot Password -->
+    <string name="reset_password_email_sent">The password reset email was successfully sent</string>
+    <string name="forgot_password_title">Forgot Password?</string>
+    <string name="forgot_password_info">Enter your email address We will send you an email to reset your password</string>
+
+
+    <!-- MainActivity -->
+    <string name="home">Home</string>
+    <string name="pay">Pay</string>
+    <string name="settings">Settings</string>
+    <string name="nfc_disable_alert">NFC is disabled</string>
+    <string name="nfc_enable_alert">Please enable NFC module</string>
+    <string name="proceed_to_enable">Proceed to enable</string>
+
+    <!-- HomeFragment -->
     <string name="title">E-wallet Balance</string>
-    <string name="service_name">Card Emulation Service</string>
-    <string name="card_title">DTU</string>
-
-    <!--  Button Names  -->
-    <string name="clearTxt">C</string>
-
-    <string name="backspace">\u232b</string>
-
-    <string name="sevenNum">7</string>
-    <string name="eightNum">8</string>
-    <string name="nineNum">9</string>
-
-    <string name="fourNum">4</string>
-    <string name="fiveNum">5</string>
-    <string name="sixNum">6</string>
-
-    <string name="oneNum">1</string>
-    <string name="twoNum">2</string>
-    <string name="threeNum">3</string>
-
-    <string name="zeroNum">0</string>
-    <string name="dotSymbol">.</string>
+    <string name="welcome">Welcome, </string>
+    <string name="enter_amount">Enter amount</string>
+    <string name="history">History</string>
+    <string name="top_up_success">Top Up Successfully</string>
+    <string name="insufficient_balance">Insufficient Balance</string>
+    <string name="withdraw_success">Withdraw Successfully</string>
 
     <!-- Transaction Activity -->
+    <string name="transaction_activity_title">Transaction History</string>
     <string name="filter">Filter</string>
     <string name="reset">Reset</string>
+    <string name="noRecord">No record found!</string>
+
+    <!-- Filtering Popup Windows Use -->
+    <string name="history_search_title">History Search</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
     <string name="search">Search</string>
     <string name="selectDate">Select a date</string>
     <string name="pleaseFillInDate">Please select date</string>
-    <string name="noRecord">No record found!</string>
+    <string name="date_duration_error">End date should be greater than Start date</string>
+
+    <!-- Settings Fragment -->
+    <string name="settings_title">Settings</string>
+    <string name="log_out_success">Log Out Successfully</string>
+    <string name="log_out">Log Out</string>
+    <string name="language">Language</string>
+    <string name="require_field">This field cannot be blank</string>
+    <string name="back_to_login">Back to Login</string>
+
+    <!-- Payment Activity -->
+    <string name="wait_for_reader">Waiting for NFC reader...</string>
+
+    <!-- HCE Service -->
+    <string name="processing">Processing</string>
+    <string name="payment_success">Payment Successfully</string>
+
 </resources>

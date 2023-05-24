@@ -31,7 +31,7 @@ public class HCEService extends HostApduService {
 
         if(Arrays.equals(BuildSelectApdu(WALLET_CARD_AID), commandApdu)){
             if(AccountAssistant.mAccountCallback != null) {
-                AccountAssistant.mAccountCallback.get().setStatusText("Processing");
+                AccountAssistant.mAccountCallback.get().setStatusText(R.string.processing);
                 AccountAssistant.mAccountCallback.get().setAnimation(R.raw.nfc_processing, true);
             }
             String userID = FirebaseAuth.getInstance().getUid();
@@ -45,7 +45,7 @@ public class HCEService extends HostApduService {
         if(Arrays.equals(statusWord, TRANSACTION_SUCCESS)){
             if(AccountAssistant.mAccountCallback != null) {
                 try {
-                    AccountAssistant.mAccountCallback.get().setStatusText("Payment Successful\nRM" + new String(payload, "UTF-8"));
+                    AccountAssistant.mAccountCallback.get().setStatusText(R.string.payment_success, "\nRM" + new String(payload, "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
@@ -56,7 +56,7 @@ public class HCEService extends HostApduService {
         }
         else if(Arrays.equals(statusWord, INSUFFICIENT_BALANCE)){
             if(AccountAssistant.mAccountCallback != null) {
-                AccountAssistant.mAccountCallback.get().setStatusText("Insufficient Balance");
+                AccountAssistant.mAccountCallback.get().setStatusText(R.string.insufficient_balance);
                 AccountAssistant.mAccountCallback.get().setAnimation(R.raw.card_fail, false);
                 AccountAssistant.mAccountCallback.get().countDownFinish();
             }

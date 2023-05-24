@@ -7,7 +7,7 @@
     android:background="@color/white_or"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".fragment.PaymentActivity">
+    tools:context=".ui.payment.PaymentActivity">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/nfc_animation"
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:text="Waiting for NFC reader..." />
+        android:text="@string/wait_for_reader" />
 
     <Button
         android:id="@+id/nfc_cancel"
@@ -39,6 +39,6 @@
         android:layout_marginRight="20dp"
         android:backgroundTint="@color/soft_blue"
         android:textSize="30sp"
-        android:text="Cancel" />
+        android:text="@string/cancel" />
 
 </LinearLayout>

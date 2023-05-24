@@ -1,4 +1,4 @@
-package com.utar.client.fragment;
+package com.utar.client.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +28,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.utar.client.R;
-import com.utar.client.ui.TransactionActivity;
 import com.utar.client.data.*;
 
 
@@ -36,7 +35,6 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
     TextView tv_amount, tv_name;
     ImageView iv_reload, iv_withdraw, iv_history;
-    String userID;
     DatabaseReference databaseReference;
     DatabaseReference transactionDatabaseReference;
     Account account;
@@ -47,16 +45,10 @@ public class HomeFragment extends Fragment {
     EditText et_amount;
     Button btn_panel;
     ProgressBar progressBar;
-    private static final String RELOAD = "Reload";
-    private static final String WITHDRAW = "Withdraw";
-    Intent serviceIntent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-
-        //serviceIntent = new Intent(getContext(), HCEService.class);
-        //getActivity().stopService(serviceIntent);
 
         iv_reload = v.findViewById(R.id.home_iv_reload);
         iv_withdraw = v.findViewById(R.id.home_iv_withdraw);
@@ -74,7 +66,7 @@ public class HomeFragment extends Fragment {
             public void onDataChange(DataSnapshot snapshot) {
                 account = snapshot.getValue(Account.class);
                 tv_amount.setText("RM " + account.getBalance());
-                tv_name.setText("Welcome, " + account.getName());
+                tv_name.setText(account.getName());
             }
 
             @Override
@@ -83,17 +75,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        iv_history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), TransactionActivity.class));
-            }
-        });
+        iv_history.setOnClickListener(event -> startActivity(new Intent(getContext(), TransactionActivity.class)));
 
         iv_reload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindowInit(RELOAD);
+                popupWindowInit(Transaction.RELOAD);
                 popupWindowShow();
             }
         });
@@ -101,7 +88,7 @@ public class HomeFragment extends Fragment {
         iv_withdraw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindowInit(WITHDRAW);
+                popupWindowInit(Transaction.WITHDRAW);
                 popupWindowShow();
             }
         });
@@ -120,15 +107,22 @@ public class HomeFragment extends Fragment {
 
 
     private void popupWindowInit(String mode){
-        popupTitle.setText(mode);
-        btn_panel.setText(mode);
+        String modeSelected = "";
+        if(mode.equals(Transaction.WITHDRAW)){
+            modeSelected = getString(R.string.withdraw);
+        }
+        else{
+            modeSelected = getString(R.string.reload);
+        }
+        popupTitle.setText(modeSelected);
+        btn_panel.setText(modeSelected);
         et_amount.setText("");
 
         btn_panel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(et_amount.getText().toString().isEmpty()){
-                    Toast.makeText(getContext(), "Please enter amount", Toast.LENGTH_SHORT).show();
+                    et_amount.setError(getString(R.string.require_field));
                     return;
                 }
                 progressBar.setVisibility(View.VISIBLE);
@@ -136,7 +130,7 @@ public class HomeFragment extends Fragment {
                 double balance = Double.parseDouble(account.getBalance());
                 double amount = Double.parseDouble(String.valueOf(et_amount.getText()));
 
-                if(mode.equals(RELOAD)){
+                if(mode.equals(Transaction.RELOAD)){
                     Log.i("Balance: ", String.valueOf(balance));
                     Log.i("adding amount", String.valueOf(amount));
 
@@ -148,9 +142,9 @@ public class HomeFragment extends Fragment {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     progressBar.setVisibility(View.GONE);
-                                    Transaction transactionReload = new Transaction(RELOAD, amount, Transaction.RELOAD);
+                                    Transaction transactionReload = new Transaction(Transaction.RELOAD, amount, Transaction.RELOAD);
                                     transactionDatabaseReference.push().setValue(transactionReload);
-                                    Toast.makeText(getContext(), "Reload Success", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), getString(R.string.top_up_success), Toast.LENGTH_SHORT).show();
                                     popupWindow.dismiss();
                                 }
                             })
@@ -158,7 +152,7 @@ public class HomeFragment extends Fragment {
                                 @Override
                                 public void onFailure(Exception e) {
                                     progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), getString(R.string.err) + ": " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     popupWindow.dismiss();
                                 }
                             });
@@ -167,7 +161,7 @@ public class HomeFragment extends Fragment {
                 else{
                     if(amount > balance){
                         progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getContext(), "Insufficient Balance", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.insufficient_balance), Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -177,9 +171,9 @@ public class HomeFragment extends Fragment {
                                 @Override
                                 public void onSuccess(Void unused) {
                                     progressBar.setVisibility(View.GONE);
-                                    Transaction transactionWithdraw = new Transaction(WITHDRAW, amount, Transaction.WITHDRAW);
+                                    Transaction transactionWithdraw = new Transaction(Transaction.WITHDRAW, amount, Transaction.WITHDRAW);
                                     transactionDatabaseReference.push().setValue(transactionWithdraw);
-                                    Toast.makeText(getContext(), "Withdraw Success", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(), getString(R.string.withdraw_success), Toast.LENGTH_SHORT).show();
                                     popupWindow.dismiss();
                                 }
                             })

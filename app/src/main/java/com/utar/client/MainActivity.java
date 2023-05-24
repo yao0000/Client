@@ -4,24 +4,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.utar.client.cardemulation.AccountAssistant;
 import com.utar.client.cardemulation.HCEService;
-import com.utar.client.fragment.*;
-
+import com.utar.client.ui.home.HomeFragment;
+import com.utar.client.ui.payment.PaymentActivity;
+import com.utar.client.ui.settings.SettingsFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -85,12 +82,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("NFC is disabled")
-                                .setMessage("Please enable NFC module")
-                                .setPositiveButton("Proceed to enable", (dialog, which) -> {
+                                .setTitle(getString(R.string.alert))
+                                .setMessage(getString(R.string.nfc_enable_alert))
+                                .setPositiveButton(getString(R.string.proceed_to_enable), (dialog, which) -> {
                                     startActivity(new Intent("android.settings.NFC_SETTINGS"));
                                 })
-                                .setNegativeButton("Cancel", null)
+                                .setNegativeButton(getString(R.string.cancel), null)
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
                         ((BottomNavigationView) findViewById(R.id.bottomNavigationView)).getMenu().findItem(R.id.home).setChecked(true);

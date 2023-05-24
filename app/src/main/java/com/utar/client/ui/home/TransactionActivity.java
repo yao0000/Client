@@ -1,4 +1,4 @@
-package com.utar.client.ui;
+package com.utar.client.ui.home;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -7,6 +7,7 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -38,7 +39,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.utar.client.R;
-import com.utar.client.ui.transaction.TransactionViewHolder;
+import com.utar.client.ui.home.transaction.TransactionViewHolder;
 
 public class TransactionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
     private static final String TAG = "TransactionActivity";
@@ -52,10 +53,12 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     private TextView tv_start_date, tv_end_date;
     private RecyclerView recyclerView;
 
+    private static TransactionActivity transactionActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
+        transactionActivity = this;
 
         recyclerView = findViewById(R.id.transaction_list);
         iv_filter = findViewById(R.id.iv_filter);
@@ -83,7 +86,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                     displayList(transactionList);
                 }
                 else {
-                    toast("No record found");
+                    toast(getString(R.string.noRecord));
                 }
             }
             @Override
@@ -91,6 +94,14 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                 toast(error.getMessage());
             }
         });
+    }
+
+    public static TransactionActivity getInstance(){
+        return transactionActivity;
+    }
+
+    public static String getIdString(int resId){
+        return transactionActivity.getString(resId);
     }
 
     private void displayList(List list){
@@ -163,8 +174,8 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                     long endTime = simpleDateFormat.parse(endDate).getTime();
                     if(startTime > endTime){
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(TransactionActivity.this);
-                        alertDialog.setTitle("Alert");
-                        alertDialog.setMessage("End date should be greater than Start date");
+                        alertDialog.setTitle(getString(R.string.alert));
+                        alertDialog.setMessage(getString(R.string.date_duration_error));
                         alertDialog.setPositiveButton( "OK",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialogOwn, int which) {

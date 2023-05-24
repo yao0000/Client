@@ -3,11 +3,15 @@
     package="com.utar.client">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature android:name="android.hardware.nfc.hce" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.nfc.hce"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.NFC" />
 
     <application
-        android:name="com.utar.client.data.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,23 +19,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.Light">
         <activity
-            android:name="com.utar.client.fragment.PaymentActivity"
+            android:name=".ui.settings.LanguageActivity"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar"/>
         <activity
-            android:name="com.utar.client.ForgotPasswordActivity"
+            android:name=".ui.payment.PaymentActivity"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
-            android:name="com.utar.client.ui.TransactionActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.Light.NoActionBar"/>
-        <activity
-            android:name="com.utar.client.Register"
+            android:name=".ForgotPasswordActivity"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
-            android:name="com.utar.client.Login"
+            android:name=".ui.home.TransactionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".Register"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".Login"
             android:exported="true"
             android:theme="@style/Theme.Material3.Light.NoActionBar">
             <intent-filter>
@@ -41,25 +49,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.utar.client.MainActivity"
-            android:exported="false" />
-
-
-        <!-- Service for handling communication with NFC terminal. -->
-        <service android:name=".cardemulation.HCEService"
+            android:name=".MainActivity"
+            android:exported="false" /> <!-- Service for handling communication with NFC terminal. -->
+        <service
+            android:name=".cardemulation.HCEService"
             android:exported="true"
             android:permission="android.permission.BIND_NFC_SERVICE">
+
             <!-- Intent filter indicating that we support card emulation. -->
             <intent-filter>
-                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <!-- Required XML configuration file, listing the AIDs that we are emulating cards
-                     for. This defines what protocols our card emulation service supports. -->
-            <meta-data android:name="android.nfc.cardemulation.host_apdu_service"
-                android:resource="@xml/aid_list"/>
+            <!--
+                 Required XML configuration file, listing the AIDs that we are emulating cards
+                     for. This defines what protocols our card emulation service supports.
+            -->
+            <meta-data
+                android:name="android.nfc.cardemulation.host_apdu_service"
+                android:resource="@xml/aid_list" />
         </service>
     </application>
-
 
 </manifest>

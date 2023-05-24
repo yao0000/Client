@@ -1,4 +1,4 @@
-package com.utar.client.fragment;
+package com.utar.client.ui.payment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -74,11 +74,21 @@ public class PaymentActivity extends AppCompatActivity implements AccountAssista
 
 
     @Override
-    public void setStatusText(String msg) {
+    public void setStatusText(int resId) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                tv_nfcStatus.setText(msg);
+                tv_nfcStatus.setText(getString(resId));
+            }
+        });
+    }
+
+    @Override
+    public void setStatusText(int resId, String appendMsg) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tv_nfcStatus.setText(getString(resId) + appendMsg);
             }
         });
     }
@@ -97,7 +107,7 @@ public class PaymentActivity extends AppCompatActivity implements AccountAssista
 
     @Override
     public void countDownFinish() {
-        CountDownTimer countDownTimer = new CountDownTimer(5000, 1000) {
+        CountDownTimer countDownTimer = new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
 

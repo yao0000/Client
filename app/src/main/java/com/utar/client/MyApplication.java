@@ -1,4 +1,4 @@
-package com.utar.client.data;
+package com.utar.client;
 
 import android.app.Application;
 

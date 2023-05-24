@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.utar.client.cardemulation.HCEService;
 
+import java.util.Locale;
+
 public class Login extends AppCompatActivity {
     private static final String TAG = "LoginFragment";
 
@@ -28,7 +32,6 @@ public class Login extends AppCompatActivity {
     Button btnLogin;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
-    TextView tvLoginPage, tv_forgotPassword;
 
     @Override
     public void onStart() {
@@ -61,6 +64,15 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
+        String lang = sharedPreferences.getString("language", "en");
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
@@ -69,24 +81,12 @@ public class Login extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
 
         progressBar = findViewById(R.id.login_progressBar);
-        tvLoginPage = findViewById(R.id.login_tv_register);
-        tv_forgotPassword = findViewById(R.id.login_tv_forgotPassword);
 
-        tvLoginPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Register.class));
-            }
-        });
+        findViewById(R.id.login_tv_register).setOnClickListener(v ->
+                startActivity(new Intent(getApplicationContext(), Register.class)));
 
-        tv_forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class));
-            }
-        });
-
-
+        findViewById(R.id.login_tv_forgotPassword).setOnClickListener(v ->
+                startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class)));
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,12 +97,12 @@ public class Login extends AppCompatActivity {
                 password = String.valueOf(editTextPassword.getText().toString());
 
                 if(email.trim().isEmpty()){
-                    editTextEmail.setError("This field cannot be blank");
+                    editTextEmail.setError(getString(R.string.require_field));
                     return;
                 }
 
-                if(password.isEmpty()){
-                    editTextPassword.setError("This field cannot be blank");
+                if(password.trim().isEmpty()){
+                    editTextPassword.setError(getString(R.string.require_field));
                     return;
                 }
 
@@ -116,14 +116,14 @@ public class Login extends AppCompatActivity {
 
                                     // Sign in success, update UI with the signed-in user's information
 
-                                    toast("Login Successful");
+                                    Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                     finish();
 
                                 } else {
                                     // If sign in fails, display a message to the user.
 
-                                    Toast.makeText(Login.this, "Authentication failed.",
+                                    Toast.makeText(Login.this, getString(R.string.login_fail),
                                             Toast.LENGTH_SHORT).show();
 
                                 }
@@ -132,8 +132,5 @@ public class Login extends AppCompatActivity {
                         });
             }
         });
-    }
-    private void toast(String msg){
-        Toast.makeText(Login.this, msg, Toast.LENGTH_LONG).show();
     }
 }

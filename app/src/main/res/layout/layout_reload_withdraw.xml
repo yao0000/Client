@@ -50,7 +50,7 @@
                 android:id="@+id/reload_withdraw_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter amount"
+                android:hint="@string/enter_amount"
                 android:inputType="number"
                 android:paddingTop="25dp"
                 android:textSize="30sp" />

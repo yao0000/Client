@@ -56,12 +56,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             public void onComplete(Task<Void> task) {
                                 if(task.isSuccessful()){
                                     progressBar.setVisibility(View.GONE);
-                                    toast("Email sent successfully to reset your password");
+                                    toast(getString(R.string.reset_password_email_sent));
                                     finish();
                                 }
                                 else{
                                     progressBar.setVisibility(View.GONE);
-                                    toast(task.getException().getMessage());
+                                    toast(getString(R.string.err) + ": " + task.getException().getMessage());
                                 }
                             }
                         });

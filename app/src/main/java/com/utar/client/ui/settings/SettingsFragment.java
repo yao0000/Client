@@ -1,4 +1,4 @@
-package com.utar.client.fragment;
+package com.utar.client.ui.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,6 @@ public class SettingsFragment extends Fragment {
     TextView tv_logout;
     View v;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,25 +42,8 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        /*Button btn_push = v.findViewById(R.id.push);
-
-        btn_push.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Transaction t = new Transaction("Shopee", 60, Transaction.PAYMENT);
-                databaseReference.push().setValue(t);
-            }
-        });
-
-        Button btn_positive = v.findViewById(R.id.positive);
-        btn_positive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Transaction t = new Transaction("ABCDEFGHIJKLMNOPQRSTUVWXYZ ABCDEFGHIJKLMNOPQRSTUVWXYZ", 100, Transaction.TRANSFER_IN);
-                databaseReference.push().setValue(t);
-            }
-        });*/
-        // Inflate the layout for this fragment
+        v.findViewById(R.id.tv_language).setOnClickListener(event ->
+                startActivity(new Intent(getActivity(), LanguageActivity.class)));
         return v;
     }
 }

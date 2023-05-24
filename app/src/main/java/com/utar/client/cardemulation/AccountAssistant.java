@@ -10,7 +10,8 @@ public class AccountAssistant {
     }
 
     public interface AccountCallback{
-        public void setStatusText(String msg);
+        public void setStatusText(int resId);
+        public void setStatusText(int resId, String appendMsg);
         public void setAnimation(int rawRes, boolean repeat);
         public void countDownFinish();
     }

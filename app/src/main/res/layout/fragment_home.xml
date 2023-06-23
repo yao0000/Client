@@ -103,7 +103,17 @@
                 android:background="@drawable/shape2"
                 android:src="@drawable/ic_list" />
 
-            <ImageView />
+            <ImageView
+                android:id="@+id/home_iv_transfer"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape2"
+                android:padding="15dp"
+                android:src="@drawable/ic_transfer" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -112,6 +122,18 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:text="@string/history"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/transfer"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
         </GridLayout>

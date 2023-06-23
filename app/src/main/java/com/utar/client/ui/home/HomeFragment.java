@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,10 +30,9 @@ import com.utar.client.R;
 import com.utar.client.data.*;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "HomeFragment";
     TextView tv_amount, tv_name;
-    ImageView iv_reload, iv_withdraw, iv_history;
     DatabaseReference databaseReference;
     DatabaseReference transactionDatabaseReference;
     Account account;
@@ -50,9 +48,11 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        iv_reload = v.findViewById(R.id.home_iv_reload);
-        iv_withdraw = v.findViewById(R.id.home_iv_withdraw);
-        iv_history = v.findViewById(R.id.home_iv_history);
+        v.findViewById(R.id.home_iv_reload).setOnClickListener(this::onClick);
+        v.findViewById(R.id.home_iv_withdraw).setOnClickListener(this::onClick);
+        v.findViewById(R.id.home_iv_history).setOnClickListener(this::onClick);
+        v.findViewById(R.id.home_iv_transfer).setOnClickListener(this::onClick);
+
         tv_amount = v.findViewById(R.id.home_tv_balance);
         tv_name = v.findViewById(R.id.home_tv_name);
 
@@ -75,23 +75,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        iv_history.setOnClickListener(event -> startActivity(new Intent(getContext(), TransactionActivity.class)));
-
-        iv_reload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindowInit(Transaction.RELOAD);
-                popupWindowShow();
-            }
-        });
-
-        iv_withdraw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindowInit(Transaction.WITHDRAW);
-                popupWindowShow();
-            }
-        });
         popupWindow = new PopupWindow(getContext());
         popupWindow.setFocusable(true);
 
@@ -193,5 +176,30 @@ public class HomeFragment extends Fragment {
     private void popupWindowShow(){
         popupWindow.showAtLocation(reloadWithdrawPanel, Gravity.CENTER, 0, 0);
         popupWindow.update(0,0, (int)(getContext().getResources().getDisplayMetrics().widthPixels * 0.9), (int)(getContext().getResources().getDisplayMetrics().heightPixels * 0.5));
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.home_iv_reload:{
+                popupWindowInit(Transaction.RELOAD);
+                popupWindowShow();
+                break;
+            }
+            case R.id.home_iv_withdraw:{
+                popupWindowInit(Transaction.WITHDRAW);
+                popupWindowShow();
+                break;
+            }
+            case R.id.home_iv_history:{
+                startActivity(new Intent(getContext(), TransactionActivity.class));
+                break;
+            }
+            case R.id.home_iv_transfer:{
+                startActivity(new Intent(getContext(), TransferActivity.class));
+                break;
+            }
+            
+        }
     }
 }

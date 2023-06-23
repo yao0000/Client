@@ -14,5 +14,6 @@ public class AccountAssistant {
         public void setStatusText(int resId, String appendMsg);
         public void setAnimation(int rawRes, boolean repeat);
         public void countDownFinish();
+        public double getAmount();
     }
 }

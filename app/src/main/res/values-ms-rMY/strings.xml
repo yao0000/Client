@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Quick eWallet</string>
+    <string name="err">Ralat Berlaku</string>
+    <string name="alert">Amaran</string>
+    <string name="submit">Serah</string>
+    <string name="cancel">Batal</string>
+
+    <string name="reload">Tambah Nilai</string>
+    <string name="withdraw">Mengeluarkan Wang</string>
+
+    <string name="payment">Bayaran</string>
+
+    <string name="transfer_in">Terima</string>
+    <string name="transfer_out">Hantar</string>
+    <string name="payment_receive">Bayaran Diterima</string>
+    <string name="email">emel</string>
+    <string name="email_hint">Masukkan Emel</string>
+    <string name="password">Kata Laluan</string>
+
+    <string name="password_hint">Masukkan Kata Laluan</string>
+
+    <string name="invalid_email">Emel tidak Sah</string>
+    <string name="minimum_password_length">Kata laluan diperlukan sekurang-kurangnya 6 aksara</string>
+    <string name="login">LOG MASUK</string>
+    <string name="forgot_password">Lupa kata laluan?</string>
+    <string name="to_register">Klik untuk mendaftar</string>
+
+    <string name="login_success">Log masuk berjaya</string>
+
+    <string name="login_fail">Kegagalan log masuk</string>
+    <string name="registration">Pendaftaran</string>
+    <string name="confirm_password">Mengesahkan Kata Laluan</string>
+    <string name="confirm_password_hint">Masukkan kata laluan sahkan</string>
+
+    <string name="name">Nama</string>
+
+    <string name="name_hint">Masukkan nama</string>
+
+    <string name="register">PENDAFTARAN</string>
+    <string name="to_login">Klik untuk pendaftaran</string>
+    <string name="mismatch_password">Kata Laluan dan Sahkan Kata Laluan tidak sepadan</string>
+
+    <string name="register_successfully">Daftar Berjaya</string>
+    <string name="fail_register">Gagal mendaftar</string>
+    <string name="reset_password_email_sent">E-mel tetapan semula kata laluan telah berjaya dihantar</string>
+    <string name="forgot_password_title">Lupa kata laluan?</string>
+    <string name="forgot_password_info">Masukkan alamat e-mel anda Kami akan menghantar e-mel kepada anda untuk menetapkan semula kata laluan anda</string>
+    <string name="home">Laman Utama</string>
+    <string name="pay">Bayar</string>
+    <string name="settings">Tetapan</string>
+
+    <string name="nfc_disable_alert">NFC dilumpuhkan</string>
+    <string name="nfc_enable_alert">Sila dayakan modul NFC</string>
+    <string name="proceed_to_enable">Teruskan untuk membolehkan</string>
+    <string name="title">Baki E-wallet</string>
+
+    <string name="welcome">"Selamat Datang, "</string>
+    <string name="enter_amount">Masukkan Jumlah</string>
+    <string name="history">Sejarah</string>
+    <string name="top_up_success">Tambah Nilai Berjaya</string>
+
+    <string name="insufficient_balance">Baki Tidak Mencukupi</string>
+    <string name="withdraw_success">Pengeluaran Berjaya</string>
+
+    <string name="transaction_activity_title">Sejarah Transaksi</string>
+    <string name="filter">Saringan</string>
+    <string name="reset">Semula</string>
+    <string name="noRecord">Tiada Rekod!</string>
+    <string name="history_search_title">Carian Rekod</string>
+    <string name="start_date">Tarikh Mula</string>
+    <string name="end_date">Tarikh Tamat</string>
+    <string name="search">Cari</string>
+    <string name="selectDate">Pilih tarikh</string>
+    <string name="pleaseFillInDate">Sila pilih tarikh</string>
+    <string name="date_duration_error">Tarisk tamat hendaklah lebih besar daripada tarikh mula</string>
+    <string name="settings_title">Tetapan</string>
+    <string name="log_out_success">Log Keluar Berjaya</string>
+    <string name="log_out">Log Keluar</string>
+    <string name="language">Bahasa</string>
+    <string name="require_field">Medan ini tidak boleh kosong</string>
+    <string name="back_to_login">Kembali untuk Log Masuk</string>
+    <string name="wait_for_reader">Menunggu Pembaca NFC...</string>
+    <string name="processing">Sedang Proses</string>
+    <string name="payment_success">Pembayaran Berjaya</string>
+    <string name="invalid_account">Akaun tidak sah</string>
+    <string name="old_pin">PIN Asal</string>
+    <string name="new_pin">Tetapkan PIN baharu</string>
+    <string name="confirm_new_pin">Sahkan PIN</string>
+</resources>

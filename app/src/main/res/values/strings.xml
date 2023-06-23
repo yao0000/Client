@@ -27,6 +27,8 @@
     <string name="email_hint">Enter Email</string>
     <string name="password">Password</string>
     <string name="password_hint">Enter Password</string>
+    <string name="invalid_email">Invalid email format</string>
+    <string name="minimum_password_length">Password is required at least 6 characters</string>
 
     <!-- Login -->
     <string name="login">LOG IN</string>
@@ -34,6 +36,7 @@
     <string name="to_register">Click to Register</string>
     <string name="login_success">Login Successfully</string>
     <string name="login_fail">Login Failure</string>
+    <string name="invalid_account">Invalid Account</string>
 
     <!-- Registration -->
     <string name="registration">Registration</string>
@@ -48,7 +51,6 @@
     <string name="fail_register">Fail to register</string>
 
     <!-- Forgot Password -->
-    <string name="reset_password_email_sent">The password reset email was successfully sent</string>
     <string name="forgot_password_title">Forgot Password?</string>
     <string name="forgot_password_info">Enter your email address We will send you an email to reset your password</string>
 
@@ -60,6 +62,8 @@
     <string name="nfc_disable_alert">NFC is disabled</string>
     <string name="nfc_enable_alert">Please enable NFC module</string>
     <string name="proceed_to_enable">Proceed to enable</string>
+    <string name="unavailable_nfc" translatable="false">NFC is not available</string>
+    <string name="nfc_denied" translatable="false">Access to NFC is denied</string>
 
     <!-- HomeFragment -->
     <string name="title">E-wallet Balance</string>
@@ -68,7 +72,8 @@
     <string name="history">History</string>
     <string name="top_up_success">Top Up Successfully</string>
     <string name="insufficient_balance">Insufficient Balance</string>
-    <string name="withdraw_success">Withdraw Successfully</string>
+    <string name="withdraw_success">Withdrawal Successfully</string>
+    <string name="transfer" translatable="false">Transfer</string>
 
     <!-- Transaction Activity -->
     <string name="transaction_activity_title">Transaction History</string>
@@ -99,5 +104,34 @@
     <!-- HCE Service -->
     <string name="processing">Processing</string>
     <string name="payment_success">Payment Successfully</string>
+
+    <!-- PIN Auth Activity -->
+    <string name="backspace" translatable="false">\u232b</string>
+    <string name="sevenNum" translatable="false">7</string>
+    <string name="eightNum" translatable="false">8</string>
+    <string name="nineNum" translatable="false">9</string>
+    <string name="fourNum" translatable="false">4</string>
+    <string name="fiveNum" translatable="false">5</string>
+    <string name="sixNum" translatable="false">6</string>
+    <string name="oneNum" translatable="false">1</string>
+    <string name="twoNum" translatable="false">2</string>
+    <string name="threeNum" translatable="false">3</string>
+    <string name="zeroNum" translatable="false">0</string>
+    <string name="clear" translatable="false">C</string>
+    <string name="reset_password_email_sent">The password reset email was successfully sent</string>
+    <string name="old_pin">Enter Old Payment PIN</string>
+    <string name="new_pin">Enter New Payment PIN</string>
+    <string name="confirm_new_pin">Confirm New Payment PIN</string>
+
+
+    <!-- Only available for client app -->
+    <!-- transfer -->
+    <string name="receive" translatable="false">Receive</string>
+    <string name="success_transfer" translatable="false">Transfer Successfully</string>
+    <string name="receive_transfer" translatable="false">Receive Transfer</string>
+    <string name="wait_nfc_device" translatable="false">Hold the NFC-enabled phone at the NFC antenna of your phone.</string>
+    <string name="please_wait" translatable="false">Please wait...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
 </resources>

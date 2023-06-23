@@ -1,12 +1,18 @@
 package com.utar.client;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,12 +27,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.utar.client.cardemulation.HCEService;
+import com.utar.client.data.Account;
+import com.utar.client.ui.settings.LanguageActivity;
 
 import java.util.Locale;
 
 public class Login extends AppCompatActivity {
     private static final String TAG = "LoginFragment";
+    private final int NFC_PERMISSION_REQUEST_CODE = 1;
+    private NfcAdapter nfcAdapter;
 
     EditText editTextEmail, editTextPassword;
     Button btnLogin;
@@ -65,6 +79,8 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //nfcPermissionCheck();
+
         SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences", MODE_PRIVATE);
         String lang = sharedPreferences.getString("language", "en");
         Locale locale = new Locale(lang);
@@ -81,6 +97,8 @@ public class Login extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
 
         progressBar = findViewById(R.id.login_progressBar);
+
+        findViewById(R.id.iv_lang).setOnClickListener(v -> startActivity(new Intent(this, LanguageActivity.class)));
 
         findViewById(R.id.login_tv_register).setOnClickListener(v ->
                 startActivity(new Intent(getApplicationContext(), Register.class)));
@@ -101,8 +119,18 @@ public class Login extends AppCompatActivity {
                     return;
                 }
 
+                if(!Register.isEmailFormatValid(email.trim())){
+                    editTextEmail.setError(getString(R.string.invalid_email));
+                    return;
+                }
+
                 if(password.trim().isEmpty()){
                     editTextPassword.setError(getString(R.string.require_field));
+                    return;
+                }
+
+                if(password.length() < 6){
+                    editTextPassword.setError(getString(R.string.minimum_password_length));
                     return;
                 }
 
@@ -114,16 +142,33 @@ public class Login extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
 
-                                    // Sign in success, update UI with the signed-in user's information
+                                    FirebaseDatabase.getInstance().getReference("user").child(FirebaseAuth.getInstance().getUid())
+                                            .addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    Account account = snapshot.getValue(Account.class);
 
-                                    Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                    finish();
+                                                    if(!account.getRole().equals(Account.FIX_CLIENT)){
+                                                        Toast.makeText(getApplicationContext(), getString(R.string.invalid_account), Toast.LENGTH_SHORT).show();
+                                                        FirebaseAuth.getInstance().signOut();
+                                                    }
+                                                    else{
+                                                        Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+                                                        MyApplication.getInstance().firebaseUserUpdate();
+                                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                        finish();
+                                                    }
+                                                }
 
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
                                 } else {
                                     // If sign in fails, display a message to the user.
 
-                                    Toast.makeText(Login.this, getString(R.string.login_fail),
+                                    Toast.makeText(Login.this, getString(R.string.invalid_account),
                                             Toast.LENGTH_SHORT).show();
 
                                 }
@@ -133,4 +178,5 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
 }

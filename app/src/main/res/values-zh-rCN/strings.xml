@@ -16,6 +16,7 @@
     <string name="password">密码</string>
     <string name="password_hint">输入密码</string>
     <string name="require_field">此字段不能为空</string>
+    <string name="invalid_email">无效电子邮件</string>
     <string name="login">登入</string>
     <string name="forgot_password">忘记密码？</string>
     <string name="to_register">点击注册</string>
@@ -66,4 +67,9 @@
     <string name="wait_for_reader">等待NFC读卡器...</string>
     <string name="processing">处理中</string>
     <string name="payment_success">付款成功</string>
+    <string name="minimum_password_length">密码需至少6个字符</string>
+    <string name="invalid_account">无效账户</string>
+    <string name="old_pin">输入旧支付密码</string>
+    <string name="new_pin">输入新支付密码</string>
+    <string name="confirm_new_pin">确认新支付密码</string>
 </resources>

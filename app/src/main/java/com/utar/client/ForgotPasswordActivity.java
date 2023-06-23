@@ -41,16 +41,21 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = String.valueOf(et_email.getText());
+                String email = String.valueOf(et_email.getText()).trim();
 
-                if(email.trim().isEmpty()){
-                    et_email.setError("This field cannot be blank");
+                if(email.isEmpty()){
+                    et_email.setError(getString(R.string.require_field));
                     return;
                 }
+
+                if(!Register.isEmailFormatValid(email)){
+                    et_email.setError(getString(R.string.invalid_email));
+                    return;
+                }
+
                 progressBar.setVisibility(View.VISIBLE);
                 FirebaseAuth.getInstance().sendPasswordResetEmail(email)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
-
 
                             @Override
                             public void onComplete(Task<Void> task) {

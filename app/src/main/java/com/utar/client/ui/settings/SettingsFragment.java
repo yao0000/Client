@@ -8,42 +8,48 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.utar.client.Login;
 import com.utar.client.R;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.utar.client.ui.auth.RegisterPinActivity;
 
-public class SettingsFragment extends Fragment {
-    TextView tv_logout;
-    View v;
+public class SettingsFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        String userID = FirebaseAuth.getInstance().getUid();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("user").child(userID).child("transactions");
+        v.findViewById(R.id.setting_tv_logout).setOnClickListener(this::onClick);
+        v.findViewById(R.id.tv_language).setOnClickListener(this::onClick);
+        v.findViewById(R.id.tv_change_pin).setOnClickListener(this::onClick);
 
-        tv_logout = v.findViewById(R.id.setting_tv_logout);
-        tv_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        return v;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_language:{
+                startActivity(new Intent(getActivity(), LanguageActivity.class));
+                break;
+            }
+            case R.id.tv_change_pin:{
+                startActivity(new Intent(getActivity(), RegisterPinActivity.class));
+                break;
+            }
+            case R.id.setting_tv_logout:{
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(getContext(), Login.class);
                 startActivity(intent);
-                Toast.makeText(getContext(), "Log out successfully", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), getString(R.string.log_out_success), Toast.LENGTH_LONG).show();
                 getActivity().finish();
+                break;
             }
-        });
 
-        v.findViewById(R.id.tv_language).setOnClickListener(event ->
-                startActivity(new Intent(getActivity(), LanguageActivity.class)));
-        return v;
+        }
     }
 }

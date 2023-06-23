@@ -3,12 +3,12 @@
     package="com.utar.client">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.NFC" />
 
     <uses-feature
         android:name="android.hardware.nfc.hce"
         android:required="true" />
-
-    <uses-permission android:name="android.permission.NFC" />
 
     <application
         android:name=".MyApplication"
@@ -19,9 +19,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.Light">
         <activity
-            android:name=".ui.settings.LanguageActivity"
+            android:name=".ui.home.transfer.TransferOutActivity"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar"/>
+        <activity
+            android:name=".ui.home.ReloadWithdrawActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.TransferActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".ui.auth.RegisterPinActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".ui.auth.AuthActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".ui.settings.LanguageActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".ui.payment.PaymentActivity"
             android:exported="false"
@@ -53,6 +72,26 @@
             android:exported="false" /> <!-- Service for handling communication with NFC terminal. -->
         <service
             android:name=".cardemulation.HCEService"
+            android:exported="true"
+            android:permission="android.permission.BIND_NFC_SERVICE">
+
+            <!-- Intent filter indicating that we support card emulation. -->
+            <intent-filter>
+                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!--
+                 Required XML configuration file, listing the AIDs that we are emulating cards
+                     for. This defines what protocols our card emulation service supports.
+            -->
+            <meta-data
+                android:name="android.nfc.cardemulation.host_apdu_service"
+                android:resource="@xml/aid_list" />
+        </service>
+
+        <service
+            android:name=".cardemulation.TransferHCEService"
             android:exported="true"
             android:permission="android.permission.BIND_NFC_SERVICE">
 

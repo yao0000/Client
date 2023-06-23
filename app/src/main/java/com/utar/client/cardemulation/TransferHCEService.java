@@ -1,40 +1,36 @@
 package com.utar.client.cardemulation;
 
-
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.utar.client.R;
-import com.utar.client.data.Account;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
-public class HCEService extends HostApduService {
-    private static final String TAG = "HCEService";
-    //AID for card services
-    private static final String WALLET_CARD_AID = "F222444888";
-    // -> Select the corresponding Application ID
+//emulate card for transfer out
+public class TransferHCEService extends HostApduService {
+    private static final String TAG = "TransferHceService";
+
+    private static final String TRANSFER_AID = "F444222888";
     private static final String SELECT_APDU_HEADER = "00A40400";
-    // -> To get data
-    private static final String GET_DATA_APDU_HEADER = "00CA0000";
+
+    //transaction status
     private static final byte[] SELECT_OK_SW = HexStringToByteArray("9000");
     private static final byte[] UNKNOWN_CMD_SW = {(byte) 0x00, (byte)0x00};
     private static final byte[] TRANSACTION_SUCCESS = {(byte)0x91, (byte)0x92};
-    private static final byte[] INSUFFICIENT_BALANCE = {(byte)0x91, (byte)0x93};
+    private static final byte[] TRANSACTION_FAIL = {(byte)0x91, (byte)0x93};
+    private static final byte[] REQUEST_AMOUNT = {(byte)0x80, (byte)0x81};
 
     @Override
     public byte[] processCommandApdu(byte[] commandApdu, Bundle extras) {
         Log.i(TAG, "Received APDU: " + ByteArrayToHexString(commandApdu));
 
-        if(Arrays.equals(BuildSelectApdu(WALLET_CARD_AID), commandApdu)){
-            if(AccountAssistant.mAccountCallback != null) {
-                AccountAssistant.mAccountCallback.get().setStatusText(R.string.processing);
-                AccountAssistant.mAccountCallback.get().setAnimation(R.raw.nfc_processing, true);
-            }
+        if(Arrays.equals(BuildSelectApdu(TRANSFER_AID), commandApdu)){
             String userID = FirebaseAuth.getInstance().getUid();
+            AccountAssistant.mAccountCallback.get().setAnimation(R.raw.loading, true);
             return ConcatArrays(userID.getBytes(), SELECT_OK_SW);
         }
 
@@ -42,22 +38,28 @@ public class HCEService extends HostApduService {
         byte[] statusWord = {commandApdu[commandLength-2], commandApdu[commandLength-1]};
         byte[] payload = Arrays.copyOf(commandApdu, commandLength - 2);
 
+        if(Arrays.equals(statusWord, REQUEST_AMOUNT)){
+            String amount = String.valueOf(AccountAssistant.mAccountCallback.get().getAmount());
+            return ConcatArrays(amount.getBytes(), REQUEST_AMOUNT);
+        }
+
+        //Transaction result
         if(Arrays.equals(statusWord, TRANSACTION_SUCCESS)){
             if(AccountAssistant.mAccountCallback != null) {
                 try {
-                    AccountAssistant.mAccountCallback.get().setStatusText(R.string.payment_success, "\nRM" + new String(payload, "UTF-8"));
+                    AccountAssistant.mAccountCallback.get().setStatusText(R.string.success_transfer, "\nRM" + new String(payload, "UTF-8"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                AccountAssistant.mAccountCallback.get().setAnimation(R.raw.nfc_finish, false);
+                AccountAssistant.mAccountCallback.get().setAnimation(R.raw.done, false);
                 AccountAssistant.mAccountCallback.get().countDownFinish();
             }
             return SELECT_OK_SW;
         }
-        else if(Arrays.equals(statusWord, INSUFFICIENT_BALANCE)){
+        else if(Arrays.equals(statusWord, TRANSACTION_FAIL)){
             if(AccountAssistant.mAccountCallback != null) {
-                AccountAssistant.mAccountCallback.get().setStatusText(R.string.insufficient_balance);
-                AccountAssistant.mAccountCallback.get().setAnimation(R.raw.card_fail, false);
+                AccountAssistant.mAccountCallback.get().setStatusText(R.string.err);
+                AccountAssistant.mAccountCallback.get().setAnimation(R.raw.error, false);
                 AccountAssistant.mAccountCallback.get().countDownFinish();
             }
             return SELECT_OK_SW;
@@ -83,17 +85,6 @@ public class HCEService extends HostApduService {
         return HexStringToByteArray(SELECT_APDU_HEADER + String.format("%02X",
                 aid.length() / 2) + aid);
         //return HexStringToByteArray(SELECT_APDU_HEADER);
-
-    }
-
-    /**
-     * Build APDU for GET_DATA command. See ISO 7816-4.
-     *
-     * @return APDU for SELECT AID command
-     */
-    public static byte[] BuildGetDataApdu() {
-        // Format: [CLASS | INSTRUCTION | PARAMETER 1 | PARAMETER 2 | LENGTH | DATA]
-        return HexStringToByteArray(GET_DATA_APDU_HEADER + "0FFF");
     }
 
     /**

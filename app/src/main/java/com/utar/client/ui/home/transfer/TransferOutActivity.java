@@ -1,84 +1,84 @@
-package com.utar.client.ui.payment;
+package com.utar.client.ui.home.transfer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.utar.client.MainActivity;
 import com.utar.client.R;
 import com.utar.client.cardemulation.AccountAssistant;
-import com.utar.client.cardemulation.HCEService;
+import com.utar.client.cardemulation.TransferHCEService;
 
-public class PaymentActivity extends AppCompatActivity implements AccountAssistant.AccountCallback {
-    private static final String TAG = "PaymentActivity";
-    LottieAnimationView lottieAnimationView;
-    TextView tv_nfcStatus;
-    AccountAssistant accountAssistant;
-    Button btn_cancel;
+public class TransferOutActivity extends AppCompatActivity implements View.OnClickListener, AccountAssistant.AccountCallback {
+
+    private static final String TAG = "TransferOutActivity";
+    private LottieAnimationView lottieAnimationView;
+    private TextView tv_nfc;
+    private AccountAssistant accountAssistant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_payment);
-        accountAssistant = new AccountAssistant(this);
-        startService(new Intent(this, HCEService.class));
-        lottieAnimationView = findViewById(R.id.nfc_animation);
-        tv_nfcStatus = findViewById(R.id.nfc_status);
-        btn_cancel = findViewById(R.id.nfc_cancel);
+        setContentView(R.layout.activity_transfer_out);
 
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //startActivity(new Intent(PaymentActivity.this, MainActivity.class));
-                finish();
-            }
-        });
+        findViewById(R.id.backBtn).setOnClickListener(this::onClick);
+        findViewById(R.id.btn_floating_action_cancel).setOnClickListener(this::onClick);
+        lottieAnimationView = findViewById(R.id.animation);
+        tv_nfc = findViewById(R.id.nfc_status);
+
+        accountAssistant = new AccountAssistant(this);
+        Log.i(TAG, "Activity Triggered");
+        getAmount();
+
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
-        Log.i(TAG, "Hce Service is started and ready for payment");
         PackageManager pm = getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName(this,
-                        "com.utar.client.cardemulation.HCEService"),
+                        "com.utar.client.cardemulation.TransferHCEService"),
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
     }
 
     @Override
-    public void onStop() {
+    protected void onStop() {
         super.onStop();
-        Log.i(TAG, "Payment activity and the Hce Service are stopped");
         PackageManager pm = getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName(this,
-                        "com.utar.client.cardemulation.HCEService"),
+                        "com.utar.client.cardemulation.TransferHCEService"),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
     }
 
-    private void toast(String msg){
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_floating_action_cancel:
+            case R.id.backBtn:{
+                setResult(RESULT_CANCELED);
+                onBackPressed();
+                break;
+            }
+
+        }
     }
-
-
 
     @Override
     public void setStatusText(int resId) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                tv_nfcStatus.setText(getString(resId));
+                tv_nfc.setText(getString(resId));
             }
         });
     }
@@ -88,7 +88,7 @@ public class PaymentActivity extends AppCompatActivity implements AccountAssista
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                tv_nfcStatus.setText(getString(resId) + appendMsg);
+                tv_nfc.setText(getString(resId) + appendMsg);
             }
         });
     }
@@ -125,6 +125,17 @@ public class PaymentActivity extends AppCompatActivity implements AccountAssista
 
     @Override
     public double getAmount() {
-        return 0;
+        SharedPreferences pref = getSharedPreferences("AmountPreference", MODE_PRIVATE);
+        String strAmount = pref.getString("amount", "NA");
+
+        if(strAmount.equals("NA")){
+            Log.e(TAG, "strAmount from shared preferences is null value");
+            return -1;
+        }
+        else{
+            Log.i(TAG, "strAmount: " + strAmount);
+            return Double.parseDouble(strAmount);
+        }
     }
+
 }

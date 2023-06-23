@@ -40,7 +40,7 @@ public class LanguageActivity extends AppCompatActivity {
                     lang = "en";
                 }
                 else if(position == 1){
-                    lang = "bm";
+                    lang = "ms";
                 }
                 else if(position == 2){
                     lang = "zh";

@@ -1,10 +1,10 @@
 package com.utar.client;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +20,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.utar.client.data.*;
+
+import java.util.regex.Pattern;
 
 public class Register extends AppCompatActivity {
 
@@ -76,8 +78,18 @@ public class Register extends AppCompatActivity {
                     return;
                 }
 
+                if(!isEmailFormatValid(email)){
+                    editTextEmail.setError(getString(R.string.invalid_email));
+                    return;
+                }
+
                 if(password.trim().isEmpty()){
                     editTextPassword.setError(getString(R.string.require_field));
+                    return;
+                }
+
+                if(password.length() < 6){
+                    editTextPassword.setError(getString(R.string.minimum_password_length));
                     return;
                 }
 
@@ -107,7 +119,7 @@ public class Register extends AppCompatActivity {
 
                                     // Sign in success, update UI with the signed-in user's information
                                     toast(getString(R.string.register_successfully));
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    //startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                                     //Firebase perform
                                     FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -115,14 +127,16 @@ public class Register extends AppCompatActivity {
 
                                     databaseReference = FirebaseDatabase.getInstance().getReference("user");
                                     Account account = new Account(name, email);
-                                    databaseReference.child(userID).setValue(account);
-
-                                    FirebaseAuth.getInstance().signOut();
-                                    finish();
-
+                                    databaseReference.child(userID).setValue(account).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            FirebaseAuth.getInstance().signOut();
+                                            finish();
+                                        }
+                                    });
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    toast(getString(R.string.fail_register));
+                                    toast(getString(R.string.fail_register) + ": " + task.getException());
                                 }
                             }
                         });
@@ -132,5 +146,11 @@ public class Register extends AppCompatActivity {
 
     private void toast(String msg){
         Toast.makeText(Register.this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    public static boolean isEmailFormatValid(String email) {
+        String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
     }
 }

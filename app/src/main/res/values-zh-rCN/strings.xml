@@ -6,7 +6,7 @@
     <string name="submit">提交</string>
     <string name="cancel">取消</string>
     <string name="reload">充值</string>
-    <string name="withdraw">取款</string>
+    <string name="withdraw">提现</string>
     <string name="payment">付款</string>
     <string name="transfer_in">资金转入</string>
     <string name="transfer_out">资金转出</string>

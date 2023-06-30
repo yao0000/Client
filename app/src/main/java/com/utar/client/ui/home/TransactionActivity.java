@@ -76,12 +76,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                     transactionList = new ArrayList<>();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Transaction transaction = dataSnapshot.getValue(Transaction.class);
-                        transactionList.add(transaction);
-                    }
-
-                    //sorting
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        Collections.sort(transactionList, Comparator.comparing(Transaction::getTime).reversed());
+                        transactionList.add(0, transaction);
                     }
                     displayList(transactionList);
                 }

@@ -1,9 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#ffffff"
+    android:orientation="vertical"
     tools:context=".ui.home.ReloadWithdrawActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/navy_blue"
+        android:paddingStart="5dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:minHeight="35dp"
+            android:minWidth="35dp"
+            android:color="@color/white"
+            android:backgroundTint="@color/white"
+            android:contentDescription="Back"
+            android:background="@drawable/ic_baseline_arrow_back_24" />
+
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:textSize="20dp"
+            android:padding="12dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="Reload/Withdraw" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp"
+            android:background="@drawable/shape"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/reload_withdraw_title"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="N/A"
+                android:gravity="left"
+                android:textColor="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="#ffffff">
+
+                <TextView
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="15dp"
+                    android:text="RM "
+                    android:gravity="left"
+                    android:textColor="#777777"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/et_reload_withdraw_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_amount"
+                    android:inputType="number"
+                    android:paddingTop="25dp"
+                    android:textSize="30sp" />
+
+            </LinearLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:columnCount="3"
+                android:rowCount="3">
+
+                <Button
+                    android:id="@+id/btn_rm10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="RM  10"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"/>
+
+                <Button
+                    android:id="@+id/btn_rm20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="RM  20"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"/>
+
+                <Button
+                    android:id="@+id/btn_rm50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="RM 50"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"/>
+
+                <Button
+                    android:id="@+id/btn_rm100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="RM 100"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"/>
+
+                <Button
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/btn_rm200"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="RM 200"
+                    android:textStyle="bold"
+                    android:backgroundTint="@color/white"
+                    android:textColor="@color/black"/>
+
+            </GridLayout>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/panel_progressBar"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_floating_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="end"
+            android:src="@drawable/baseline_arrow_forward_24"
+            app:backgroundTint="@color/soft_blue"
+            app:elevation="6dp"
+            app:tint="@color/white"/>
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>

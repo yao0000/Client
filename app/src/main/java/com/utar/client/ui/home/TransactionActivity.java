@@ -2,6 +2,7 @@ package com.utar.client.ui.home;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
+
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import android.content.DialogInterface;
@@ -41,7 +42,7 @@ import java.util.List;
 import com.utar.client.R;
 import com.utar.client.ui.home.transaction.TransactionViewHolder;
 
-public class TransactionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class TransactionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private static final String TAG = "TransactionActivity";
     private DatabaseReference databaseReference;
     private List<Transaction> transactionList = new ArrayList<>(), searchList;
@@ -54,6 +55,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     private RecyclerView recyclerView;
 
     private static TransactionActivity transactionActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,18 +74,18 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
         databaseReference.child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if(snapshot.exists()) {
+                if (snapshot.exists()) {
                     transactionList = new ArrayList<>();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         Transaction transaction = dataSnapshot.getValue(Transaction.class);
                         transactionList.add(0, transaction);
                     }
                     displayList(transactionList);
-                }
-                else {
+                } else {
                     toast(getString(R.string.noRecord));
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError error) {
                 toast(error.getMessage());
@@ -91,15 +93,15 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
         });
     }
 
-    public static TransactionActivity getInstance(){
+    public static TransactionActivity getInstance() {
         return transactionActivity;
     }
 
-    public static String getIdString(int resId){
+    public static String getIdString(int resId) {
         return transactionActivity.getString(resId);
     }
 
-    private void displayList(List list){
+    private void displayList(List list) {
         recyclerView.setLayoutManager(new LinearLayoutManager(TransactionActivity.this));
         recyclerView.setAdapter(new RecyclerView.Adapter<TransactionViewHolder>() {
 
@@ -122,11 +124,11 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
         });
     }
 
-    private void toast(String msg){
+    private void toast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    private void initDatePickDialog(){
+    private void initDatePickDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         View view = getLayoutInflater().inflate(R.layout.layout_date_picker, null);
@@ -154,7 +156,7 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                 String startDate = String.valueOf(tv_start_date.getText());
                 String endDate = String.valueOf(tv_end_date.getText());
 
-                if(startDate.equals(getResources().getString(R.string.selectDate)) || endDate.equals(getResources().getString(R.string.selectDate))){
+                if (startDate.equals(getResources().getString(R.string.selectDate)) || endDate.equals(getResources().getString(R.string.selectDate))) {
                     toast(getResources().getString(R.string.pleaseFillInDate));
                     return;
                 }
@@ -167,11 +169,11 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                 try {
                     long startTime = simpleDateFormat.parse(startDate).getTime();
                     long endTime = simpleDateFormat.parse(endDate).getTime();
-                    if(startTime > endTime){
+                    if (startTime > endTime) {
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(TransactionActivity.this);
                         alertDialog.setTitle(getString(R.string.alert));
                         alertDialog.setMessage(getString(R.string.date_duration_error));
-                        alertDialog.setPositiveButton( "OK",
+                        alertDialog.setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialogOwn, int which) {
                                         dialogOwn.dismiss();
@@ -180,17 +182,16 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
                         alertDialog.create().show();
                         return;
 
-                    }
-                    else{
-                        for(int i = transactionList.size()-1; i >= 0; i--){
-                            if(isInRange(transactionList.get(i), startTime, endTime)){
+                    } else {
+                        for (int i = transactionList.size() - 1; i >= 0; i--) {
+                            if (isInRange(transactionList.get(i), startTime, endTime)) {
                                 searchList.add(transactionList.get(i));
                             }
                         }
 
-                        if(searchList.size() == 0){
+                        if (searchList.size() == 0) {
                             toast(getResources().getString(R.string.noRecord));
-                        }else {
+                        } else {
                             displayList(searchList);
                             dialog.dismiss();
                         }
@@ -206,14 +207,14 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
     }
 
 
-    private boolean isInRange(Transaction transaction, long startTime, long endTime){
+    private boolean isInRange(Transaction transaction, long startTime, long endTime) {
         return ((transaction.getTimestamp() > startTime) && (transaction.getTimestamp() < endTime));
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        if(v.getId() == R.id.iv_filter){
+        if (v.getId() == R.id.iv_filter) {
             menu.add(0, 1, 0, getResources().getString(R.string.filter));
             menu.add(0, 2, 0, getResources().getString(R.string.reset));
         }
@@ -221,12 +222,12 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case 1:{
+        switch (item.getItemId()) {
+            case 1: {
                 dialog.show();
                 break;
             }
-            case 2:{
+            case 2: {
                 displayList(transactionList);
                 break;
             }
@@ -240,10 +241,9 @@ public class TransactionActivity extends AppCompatActivity implements DatePicker
         String month[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"};
         String selectedDate = dayOfMonth + " " + month[monthOfYear] + " " + year;
 
-        if(view == startDatePickerDialog){
+        if (view == startDatePickerDialog) {
             tv_start_date.setText(selectedDate);
-        }
-        else if(view == endDatePickerDialog){
+        } else if (view == endDatePickerDialog) {
             tv_end_date.setText(selectedDate);
         }
     }

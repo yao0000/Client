@@ -6,6 +6,7 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -41,6 +42,13 @@ public class TransferOutFragment extends Fragment implements View.OnClickListene
         View v = inflater.inflate(R.layout.fragment_transfer_out, container, false);
 
         et_amount = v.findViewById(R.id.et_amount);
+        /*et_amount.setOnClickListener(v -> {
+            new NumberKeyboard(ReloadWithdrawActivity.this, et_amount).show();
+        });*/
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            et_amount.setShowSoftInputOnFocus(false);
+        }
         v.findViewById(R.id.btn_rm10).setOnClickListener(this::onClick);
         v.findViewById(R.id.btn_rm20).setOnClickListener(this::onClick);
         v.findViewById(R.id.btn_rm50).setOnClickListener(this::onClick);

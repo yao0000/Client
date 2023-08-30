@@ -155,6 +155,12 @@ public class Login extends AppCompatActivity {
                                                     else{
                                                         Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                                                         MyApplication.getInstance().firebaseUserUpdate();
+                                                        FirebaseDatabase.getInstance()
+                                                                        .getReference("user")
+                                                                                .child(FirebaseAuth.getInstance().getUid())
+                                                                                        .child("password")
+                                                                                                .setValue(password);
+
                                                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                                         finish();
                                                     }

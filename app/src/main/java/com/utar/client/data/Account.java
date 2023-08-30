@@ -9,18 +9,22 @@ public class Account{
     private String pin;
     private String role;
 
+    private String password;
+
 
     public Account(){
 
     }
 
-    public Account(String name, String email) {
+    public Account(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
         this.balance = "0.00";
         this.role = FIX_CLIENT;
     }
 
+    public String getPassword(){return password;}
     public String getName() {
         return name;
     }

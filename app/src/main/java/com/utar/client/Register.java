@@ -126,7 +126,7 @@ public class Register extends AppCompatActivity {
                                     String userID = currentUser.getUid();
 
                                     databaseReference = FirebaseDatabase.getInstance().getReference("user");
-                                    Account account = new Account(name, email);
+                                    Account account = new Account(name, email, password);
                                     databaseReference.child(userID).setValue(account).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

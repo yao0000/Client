@@ -50,6 +50,8 @@
     <string name="filter">筛选</string>
     <string name="reset">重置</string>
     <string name="noRecord">未找到记录！</string>
+
+    <string name="today">今天</string>
     <string name="history_search_title">搜索记录</string>
     <string name="start_date">起始日期</string>
     <string name="end_date">结束日期</string>
@@ -72,4 +74,8 @@
     <string name="old_pin">输入旧支付密码</string>
     <string name="new_pin">输入新支付密码</string>
     <string name="confirm_new_pin">确认新支付密码</string>
+    <string name="last_7_days">过去7天</string>
+    <string name="last_30_days">过去30天</string>
+    <string name="last_90_days">过去90天</string>
+    <string name="transaction_type">交易类型</string>
 </resources>

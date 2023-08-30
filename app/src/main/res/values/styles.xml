@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="PopupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_top</item>
+    </style>
+
+    <style name="cb_color" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">@color/soft_blue</item> <!-- for uncheck state -->
+        <item name="android:textColorSecondary">@color/navy_blue</item> <!-- for check state -->
+    </style>
+</resources>

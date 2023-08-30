@@ -3,6 +3,7 @@ package com.utar.client.data;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
+
 public class Transaction {
 
   /*** Transaction Type ***/

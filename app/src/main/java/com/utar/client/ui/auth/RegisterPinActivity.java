@@ -255,4 +255,10 @@ public class RegisterPinActivity extends AppCompatActivity implements View.OnCli
             viewList.get(i).setBackgroundResource(R.drawable.bg_view_grey_oval);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(RESULT_CANCELED);
+    }
 }

@@ -19,15 +19,6 @@
         android:textStyle="bold"
         android:text="@string/settings" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Account"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/dark_grey"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"/>
 
     <TextView
         android:id="@+id/tv_change_pin"
@@ -39,24 +30,16 @@
         android:drawablePadding="12dp"
         android:padding="12dp"
         android:textSize="18sp"
-        android:text="Change Payment PIN" />
+        android:text="@string/change_authentication_pin" />
+
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="@color/light_grey"
+        android:layout_height="1dp"
+        android:background="#000000"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="System Settings"
-        android:layout_marginTop="10dp"
-         android:layout_marginBottom="10dp"
-        android:textColor="@color/dark_grey"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"/>
 
     <TextView
         android:id="@+id/tv_language"
@@ -68,6 +51,23 @@
         android:padding="12dp"
         android:textSize="18sp"
         android:text="@string/language" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"/>
+
+    <TextView
+        android:id="@+id/setting_nfc_export"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/baseline_output_24"
+        android:drawablePadding="12dp"
+        android:padding="12dp"
+        android:textSize="18sp"
+        android:text="@string/nfc_login" />
 
     <View
         android:layout_width="match_parent"

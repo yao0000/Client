@@ -14,10 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.utar.client.MainActivity;
 import com.utar.client.R;
-import com.utar.client.cardemulation.AccountAssistant;
-import com.utar.client.cardemulation.HCEService;
+import com.utar.client.card.AccountAssistant;
+import com.utar.client.card.HCEService;
 
 public class PaymentActivity extends AppCompatActivity implements AccountAssistant.AccountCallback {
     private static final String TAG = "PaymentActivity";
@@ -51,7 +50,7 @@ public class PaymentActivity extends AppCompatActivity implements AccountAssista
         Log.i(TAG, "Hce Service is started and ready for payment");
         PackageManager pm = getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName(this,
-                        "com.utar.client.cardemulation.HCEService"),
+                        "com.utar.client.card.HCEService"),
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
     }
@@ -62,7 +61,7 @@ public class PaymentActivity extends AppCompatActivity implements AccountAssista
         Log.i(TAG, "Payment activity and the Hce Service are stopped");
         PackageManager pm = getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName(this,
-                        "com.utar.client.cardemulation.HCEService"),
+                        "com.utar.client.card.HCEService"),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
     }

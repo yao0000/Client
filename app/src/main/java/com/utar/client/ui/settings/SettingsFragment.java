@@ -1,6 +1,7 @@
 package com.utar.client.ui.settings;
 
 import android.content.Intent;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -29,6 +30,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
         v.findViewById(R.id.setting_tv_logout).setOnClickListener(this::onClick);
         v.findViewById(R.id.tv_language).setOnClickListener(this::onClick);
         v.findViewById(R.id.tv_change_pin).setOnClickListener(this::onClick);
+        v.findViewById(R.id.setting_nfc_export).setOnClickListener(this::onClick);
 
         return v;
     }
@@ -42,6 +44,32 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
             }
             case R.id.tv_change_pin:{
                 startActivity(new Intent(getActivity(), RegisterPinActivity.class));
+                break;
+            }
+            case R.id.setting_nfc_export:{
+                NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getContext());
+
+                if(!nfcAdapter.isEnabled()){
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(getString(R.string.nfc_disable_alert))
+                            .setMessage(getString(R.string.nfc_enable_alert))
+                            .setPositiveButton(getString(R.string.proceed_to_enable), (dialog, which) ->
+                                    startActivity(new Intent("android.settings.NFC_SETTINGS")))
+                            .setNegativeButton(getString(R.string.cancel), null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                    break;
+                }
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle(getString(R.string.nfc_login))
+                        .setMessage(getString(R.string.log_out_from_old_device) + "?")
+                        .setPositiveButton("OK", (dialog, which) -> {
+                            startActivity(new Intent(getContext(), AccountExportActivity.class));
+                        })
+                        .setNegativeButton(getString(R.string.cancel), null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
                 break;
             }
             case R.id.setting_tv_logout:{

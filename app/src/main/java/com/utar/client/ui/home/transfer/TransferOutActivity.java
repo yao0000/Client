@@ -3,7 +3,6 @@ package com.utar.client.ui.home.transfer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -14,8 +13,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.utar.client.R;
-import com.utar.client.cardemulation.AccountAssistant;
-import com.utar.client.cardemulation.TransferHCEService;
+import com.utar.client.card.AccountAssistant;
 
 public class TransferOutActivity extends AppCompatActivity implements View.OnClickListener, AccountAssistant.AccountCallback {
 
@@ -44,8 +42,8 @@ public class TransferOutActivity extends AppCompatActivity implements View.OnCli
     protected void onResume() {
         super.onResume();
         PackageManager pm = getPackageManager();
-        pm.setComponentEnabledSetting(new ComponentName(this,
-                        "com.utar.client.cardemulation.TransferHCEService"),
+        pm.setComponentEnabledSetting(new ComponentName(TransferOutActivity.this,
+                        "com.utar.client.card.TransferHCEService"),
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP);
     }
@@ -54,8 +52,8 @@ public class TransferOutActivity extends AppCompatActivity implements View.OnCli
     protected void onStop() {
         super.onStop();
         PackageManager pm = getPackageManager();
-        pm.setComponentEnabledSetting(new ComponentName(this,
-                        "com.utar.client.cardemulation.TransferHCEService"),
+        pm.setComponentEnabledSetting(new ComponentName(TransferOutActivity.this,
+                        "com.utar.client.card.TransferHCEService"),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
     }

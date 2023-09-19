@@ -44,9 +44,6 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pin_auth);
-
-        init();
 
         if(MyApplication.getInstance().getAccount().getPin().isEmpty()) {
             Intent intent = new Intent(this, RegisterPinActivity.class);
@@ -54,6 +51,8 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
             startActivityForResult(intent, REQUEST_CODE_REGISTER_PIN_ACTIVITY);
             return;
         }
+        setContentView(R.layout.activity_pin_auth);
+        init();
         fingerprintAuthenticate();
     }
 
@@ -243,6 +242,12 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         if(requestCode == REQUEST_CODE_REGISTER_PIN_ACTIVITY){
             if(resultCode == RESULT_OK){
                 recreate();
+            }
+            else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(getApplicationContext(),
+                        this.getString(R.string.err),
+                        Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
     }

@@ -6,10 +6,13 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -21,6 +24,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.utar.client.MainActivity;
 import com.utar.client.MyApplication;
 import com.utar.client.R;
 import com.utar.client.ui.auth.AuthActivity;
@@ -42,13 +51,7 @@ public class TransferOutFragment extends Fragment implements View.OnClickListene
         View v = inflater.inflate(R.layout.fragment_transfer_out, container, false);
 
         et_amount = v.findViewById(R.id.et_amount);
-        /*et_amount.setOnClickListener(v -> {
-            new NumberKeyboard(ReloadWithdrawActivity.this, et_amount).show();
-        });*/
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            et_amount.setShowSoftInputOnFocus(false);
-        }
         v.findViewById(R.id.btn_rm10).setOnClickListener(this::onClick);
         v.findViewById(R.id.btn_rm20).setOnClickListener(this::onClick);
         v.findViewById(R.id.btn_rm50).setOnClickListener(this::onClick);
@@ -71,8 +74,35 @@ public class TransferOutFragment extends Fragment implements View.OnClickListene
             public void afterTextChanged(Editable s) {
                 String after = et_amount.getText().toString();
                 if(!after.isEmpty()) {
-                    if (Double.parseDouble(after) > Double.parseDouble(MyApplication.getInstance().getAccount().getBalance())) {
-                        et_amount.setError(getString(R.string.insufficient_balance));
+                    if(MyApplication.getInstance().getAccount().getBalance() == null){
+                        FirebaseDatabase.getInstance().getReference("user")
+                                .child(FirebaseAuth.getInstance().getUid())
+                                .child("balance")
+                                .addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        double balance = Double.parseDouble(snapshot.getValue(String.class));
+                                        if (Double.parseDouble(after) > balance) {
+                                            et_amount.setError(getString(R.string.insufficient_balance));
+                                        }
+                                        else{
+                                            et_amount.setError(null);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                    }
+                    else {
+                        if (Double.parseDouble(after) > Double.parseDouble(MyApplication.getInstance().getAccount().getBalance())) {
+                            et_amount.setError(getString(R.string.insufficient_balance));
+                        }
+                        else{
+                            et_amount.setError(null);
+                        }
                     }
                 }
             }
@@ -109,6 +139,30 @@ public class TransferOutFragment extends Fragment implements View.OnClickListene
                 String strAmount = et_amount.getText().toString().trim();
                 if(strAmount.isEmpty()){
                     et_amount.setError(getString(R.string.require_field));
+                    break;
+                }
+
+                NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(getContext());
+                if (nfcAdapter == null) {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(getString(R.string.alert))
+                            .setMessage(getString(R.string.unavailable_nfc))
+                            .setNegativeButton("OK", null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                    break;
+                }
+
+                if (!nfcAdapter.isEnabled()) {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle(getString(R.string.alert))
+                            .setMessage(getString(R.string.nfc_enable_alert))
+                            .setPositiveButton(getString(R.string.proceed_to_enable), (dialog, which) -> {
+                                startActivity(new Intent("android.settings.NFC_SETTINGS"));
+                            })
+                            .setNegativeButton(getString(R.string.cancel), null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
                     break;
                 }
 

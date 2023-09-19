@@ -1,8 +1,11 @@
 package com.utar.client.ui.home;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -26,12 +29,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.utar.client.MainActivity;
 import com.utar.client.R;
 import com.utar.client.data.*;
+import com.utar.client.ui.auth.AuthActivity;
+import com.utar.client.ui.payment.PaymentActivity;
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "HomeFragment";
+    private static final int REQUEST_CODE_AUTHENTICATION_ACTIVITY = 4;
     TextView tv_amount, tv_name;
     DatabaseReference databaseReference;
     DatabaseReference transactionDatabaseReference;
@@ -50,7 +57,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tv_name = v.findViewById(R.id.home_tv_name);
 
         String userID = FirebaseAuth.getInstance().getUid();
-        FirebaseDatabase.getInstance().getReference("user").child(userID).keepSynced(true);
+        //FirebaseDatabase.getInstance().getReference("user").child(userID).keepSynced(true);
         databaseReference = FirebaseDatabase.getInstance().getReference("user").child(userID);
         transactionDatabaseReference = FirebaseDatabase.getInstance().getReference("transactions").child(userID);
 
@@ -97,4 +104,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             
         }
     }
+
+
 }

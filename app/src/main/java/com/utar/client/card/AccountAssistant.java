@@ -1,4 +1,4 @@
-package com.utar.client.cardemulation;
+package com.utar.client.card;
 
 import java.lang.ref.WeakReference;
 

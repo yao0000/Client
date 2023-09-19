@@ -10,18 +10,19 @@ public class Account{
     private String role;
 
     private String password;
-
+    private String deviceId;
 
     public Account(){
 
     }
 
-    public Account(String name, String email, String password) {
+    public Account(String name, String email, String password, String id) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.balance = "0.00";
         this.role = FIX_CLIENT;
+        this.deviceId = id;
     }
 
     public String getPassword(){return password;}
@@ -42,6 +43,14 @@ public class Account{
             return "";
         }
         return pin;
+    }
+
+    public String getDeviceId(){
+        return deviceId;
+    }
+
+    public void setDeviceId(String id){
+        this.deviceId = id;
     }
 
     public String getRole(){

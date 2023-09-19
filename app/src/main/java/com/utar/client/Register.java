@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -126,7 +127,8 @@ public class Register extends AppCompatActivity {
                                     String userID = currentUser.getUid();
 
                                     databaseReference = FirebaseDatabase.getInstance().getReference("user");
-                                    Account account = new Account(name, email, password);
+                                    String id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                                    Account account = new Account(name, email, password, id);
                                     databaseReference.child(userID).setValue(account).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

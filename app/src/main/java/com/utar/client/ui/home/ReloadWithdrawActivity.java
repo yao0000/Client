@@ -1,8 +1,10 @@
 package com.utar.client.ui.home;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,10 +22,12 @@ import com.utar.client.MyApplication;
 import com.utar.client.R;
 import com.utar.client.data.Account;
 import com.utar.client.data.Transaction;
+import com.utar.client.ui.auth.AuthActivity;
 
 public class ReloadWithdrawActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG     = "ReloadWithdrawActivity";
+    private static final int REQUEST_CODE_AUTHENTICATION_ACTIVITY = 4;
     public static final int RELOAD      = 1;
     public static final int WITHDRAW    = 2;
 
@@ -177,8 +181,25 @@ public class ReloadWithdrawActivity extends AppCompatActivity implements View.On
                     et_amount.setError(getString(R.string.require_field));
                     break;
                 }
+                if(mode == WITHDRAW){
+                    Intent intent = new Intent(ReloadWithdrawActivity.this, AuthActivity.class);
+                    startActivityForResult(intent, REQUEST_CODE_AUTHENTICATION_ACTIVITY);
+                    break;
+                }
                 reloadWithdraw();
                 break;
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if(requestCode == REQUEST_CODE_AUTHENTICATION_ACTIVITY){
+            if(resultCode == RESULT_OK){
+                reloadWithdraw();
             }
         }
     }

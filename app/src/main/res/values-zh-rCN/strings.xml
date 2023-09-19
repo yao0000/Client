@@ -22,6 +22,8 @@
     <string name="to_register">点击注册</string>
     <string name="login_success">登入成功</string>
     <string name="login_fail">登入失败</string>
+    <string name="log_out_from_old_device">" 登出旧设备并登录新设备"</string>
+    <string name="wait_for_device">等待NFC设备</string>
     <string name="registration">注册</string>
     <string name="confirm_password">确认密码</string>
     <string name="confirm_password_hint">输入确认密码</string>
@@ -39,6 +41,8 @@
     <string name="home">主页</string>
     <string name="pay">付款</string>
     <string name="settings">设置</string>
+    <string name="unavailable_nfc">NFC无法使用</string>
+    <string name="nfc_denied">NFC 访问被拒绝</string>
     <string name="title">电子钱包余额</string>
     <string name="welcome">欢迎，</string>
     <string name="enter_amount">输入金额</string>
@@ -46,6 +50,7 @@
     <string name="top_up_success">充值成功</string>
     <string name="insufficient_balance">余额不足</string>
     <string name="withdraw_success">取款成功</string>
+    <string name="transfer">转账</string>
     <string name="transaction_activity_title">交易记录</string>
     <string name="filter">筛选</string>
     <string name="reset">重置</string>
@@ -78,4 +83,12 @@
     <string name="last_30_days">过去30天</string>
     <string name="last_90_days">过去90天</string>
     <string name="transaction_type">交易类型</string>
+    <string name="receive">接收</string>
+    <string name="success_transfer">转账成功</string>
+    <string name="receive_transfer">接收转账</string>
+    <string name="wait_nfc_device">将支持 NFC 的手机放在手机的 NFC 天线处</string>
+    <string name="please_wait">请等待...</string>
+    <string name="new_device">新设备登入</string>
+    <string name="nfc_login">NFC替换登入</string>
+    <string name="change_authentication_pin">更换验证密码</string>
 </resources>

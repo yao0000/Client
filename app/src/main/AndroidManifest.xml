@@ -4,8 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.NFC" />
 
+    <uses-permission android:name="android.permission.NFC" />
     <uses-feature
         android:name="android.hardware.nfc.hce"
         android:required="true" />
@@ -19,9 +19,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.Light">
         <activity
-            android:name=".ui.home.transfer.TransferOutActivity"
+            android:name=".ui.settings.AccountExportActivity"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar"/>
+        <activity
+            android:name=".NfcLoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
+        <activity
+            android:name=".ui.home.transfer.TransferOutActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Light.NoActionBar" />
         <activity
             android:name=".ui.home.ReloadWithdrawActivity"
             android:exported="false" />
@@ -71,7 +79,26 @@
             android:name=".MainActivity"
             android:exported="false" /> <!-- Service for handling communication with NFC terminal. -->
         <service
-            android:name=".cardemulation.HCEService"
+            android:name=".card.HCEService"
+            android:exported="true"
+            android:permission="android.permission.BIND_NFC_SERVICE">
+
+            <!-- Intent filter indicating that we support card emulation. -->
+            <intent-filter>
+                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!--
+                 Required XML configuration file, listing the AIDs that we are emulating cards
+                     for. This defines what protocols our card emulation service supports.
+            -->
+            <meta-data
+                android:name="android.nfc.cardemulation.host_apdu_service"
+                android:resource="@xml/aid_list" />
+        </service>
+        <service
+            android:name=".card.TransferHCEService"
             android:exported="true"
             android:permission="android.permission.BIND_NFC_SERVICE">
 
@@ -91,7 +118,7 @@
         </service>
 
         <service
-            android:name=".cardemulation.TransferHCEService"
+            android:name=".card.AccountExportHCEService"
             android:exported="true"
             android:permission="android.permission.BIND_NFC_SERVICE">
 

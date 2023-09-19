@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.utar.client.R;
-import com.utar.client.cardemulation.TransferNfcReader;
+import com.utar.client.card.TransferNfcReader;
 
 public class ReceiveTransferFragment extends Fragment implements View.OnClickListener, TransferNfcReader.AccountCallback {
 
@@ -58,8 +58,8 @@ public class ReceiveTransferFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         Log.i(TAG, "Disabling reader mode");
 
         NfcAdapter nfc = NfcAdapter.getDefaultAdapter(getContext());
@@ -69,8 +69,8 @@ public class ReceiveTransferFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         Log.i(TAG, "Enabling reader mode");
 
         NfcAdapter nfc = NfcAdapter.getDefaultAdapter(getContext());

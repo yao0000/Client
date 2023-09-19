@@ -1,4 +1,4 @@
-package com.utar.client.cardemulation;
+package com.utar.client.card;
 
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;

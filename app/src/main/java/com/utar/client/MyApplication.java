@@ -15,24 +15,22 @@ import com.google.firebase.database.ValueEventListener;
 import com.utar.client.data.Account;
 
 public class MyApplication extends Application {
-
-    private static MyApplication myApplication;
-    private Account account;
-
-    //for screen size
-    private int displayHeight, displayWidth;
-
     @Override
     public void onCreate() {
         super.onCreate();
         PackageManager pm = getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName(this,
-                        "com.utar.client.cardemulation.HCEService"),
+                        "com.utar.client.card.HCEService"),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
 
         pm.setComponentEnabledSetting(new ComponentName(this,
-                        "com.utar.client.cardemulation.TransferHCEService"),
+                        "com.utar.client.card.TransferHCEService"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP);
+
+        pm.setComponentEnabledSetting(new ComponentName(this,
+                        "com.utar.client.card.AccountExportHCEService"),
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);
 
@@ -44,6 +42,12 @@ public class MyApplication extends Application {
         firebaseUserUpdate();
 
     }
+
+    private static MyApplication myApplication;
+    private Account account;
+
+    //for screen size
+    private int displayHeight, displayWidth;
 
     public static MyApplication getInstance(){
         return myApplication;

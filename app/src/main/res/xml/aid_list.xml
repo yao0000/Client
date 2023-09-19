@@ -60,6 +60,7 @@ limitations under the License.
     <aid-group android:description="@string/card_title" android:category="other">
         <aid-filter android:name="F222444888"/>
         <aid-filter android:name="F444222888"/>
+        <aid-filter android:name="F000222444"/>
     </aid-group>
 
 </host-apdu-service>

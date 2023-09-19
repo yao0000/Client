@@ -37,6 +37,11 @@
     <string name="login_success">Login Successfully</string>
     <string name="login_fail">Login Failure</string>
     <string name="invalid_account">Invalid Account</string>
+    <string name="log_out_from_old_device">Log out from old device and log in new device</string>
+
+
+    <!--NFC Login-->
+    <string name="wait_for_device">Waiting for NFC-enabled device</string>
 
     <!-- Registration -->
     <string name="registration">Registration</string>
@@ -62,8 +67,8 @@
     <string name="nfc_disable_alert">NFC is disabled</string>
     <string name="nfc_enable_alert">Please enable NFC module</string>
     <string name="proceed_to_enable">Proceed to enable</string>
-    <string name="unavailable_nfc" translatable="false">NFC is not available</string>
-    <string name="nfc_denied" translatable="false">Access to NFC is denied</string>
+    <string name="unavailable_nfc">NFC is not available</string>
+    <string name="nfc_denied">Access to NFC is denied</string>
 
     <!-- HomeFragment -->
     <string name="title">E-wallet Balance</string>
@@ -73,7 +78,7 @@
     <string name="top_up_success">Top Up Successfully</string>
     <string name="insufficient_balance">Insufficient Balance</string>
     <string name="withdraw_success">Withdrawal Successfully</string>
-    <string name="transfer" translatable="false">Transfer</string>
+    <string name="transfer">Transfer</string>
 
     <!-- Transaction Activity -->
     <string name="transaction_activity_title">Transaction History</string>
@@ -105,6 +110,8 @@
     <string name="language">Language</string>
     <string name="require_field">This field cannot be blank</string>
     <string name="back_to_login">Back to Login</string>
+    <string name="nfc_login">NFC transfer login</string>
+    <string name="change_authentication_pin">Change Authentication PIN</string>
 
     <!-- Payment Activity -->
     <string name="wait_for_reader">Waiting for NFC reader...</string>
@@ -134,12 +141,13 @@
 
     <!-- Only available for client app -->
     <!-- transfer -->
-    <string name="receive" translatable="false">Receive</string>
-    <string name="success_transfer" translatable="false">Transfer Successfully</string>
-    <string name="receive_transfer" translatable="false">Receive Transfer</string>
-    <string name="wait_nfc_device" translatable="false">Hold the NFC-enabled phone at the NFC antenna of your phone.</string>
-    <string name="please_wait" translatable="false">Please wait...</string>
+    <string name="receive">Receive</string>
+    <string name="success_transfer">Transfer Successfully</string>
+    <string name="receive_transfer">Receive Transfer</string>
+    <string name="wait_nfc_device">Hold the NFC-enabled phone at the NFC antenna of your phone.</string>
+    <string name="please_wait">Please wait...</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="new_device">New Device Login</string>
 
 </resources>

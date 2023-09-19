@@ -4,26 +4,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.utar.client.data.Account;
 import com.utar.client.ui.auth.AuthActivity;
-import com.utar.client.cardemulation.HCEService;
-import com.utar.client.ui.auth.RegisterPinActivity;
+import com.utar.client.card.HCEService;
 import com.utar.client.ui.home.HomeFragment;
-import com.utar.client.ui.home.transfer.TransferOutActivity;
 import com.utar.client.ui.payment.PaymentActivity;
 import com.utar.client.ui.settings.SettingsFragment;
 
@@ -47,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         //first page
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new HomeFragment()).commit();
+
+        checkDeviceID();
     }
 
     //Bottom Navigation Set up
@@ -116,5 +116,39 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(FirebaseAuth.getInstance().getUid() == null){
+            startActivity(new Intent(this, Login.class));
+            finish();
+        }
+    }
 
+    private void checkDeviceID(){
+        if(FirebaseAuth.getInstance().getUid() == null) return;
+
+        FirebaseDatabase.getInstance()
+                .getReference("user")
+                .child(FirebaseAuth.getInstance().getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Account account = snapshot.getValue(Account.class);
+                        if(account == null) return;
+
+                        String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                        if(!account.getDeviceId().equals(deviceId)){
+                            Log.i(TAG, deviceId);
+                            FirebaseAuth.getInstance().signOut();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
 }
